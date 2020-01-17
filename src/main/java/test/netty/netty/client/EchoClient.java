@@ -6,6 +6,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import test.netty.constants.AddressConstants;
+import test.netty.netty.client.handler.EchoClientInitializer;
 import test.netty.utils.NettyUtil;
 
 /**
@@ -22,15 +23,19 @@ public class EchoClient {
         Bootstrap bootstrap = new Bootstrap()
                 .group(clientGroup)
                 .channel(NioSocketChannel.class)
-                .handler(null);
+                .handler(new EchoClientInitializer());
         try {
             ChannelFuture channelFuture = bootstrap.connect(AddressConstants.ADDRESS_COMMON, AddressConstants.PORT_TCP).sync();
             NettyUtil.sendInputMsgToChannel(channelFuture.channel());
-
+            channelFuture.channel().close();
         } catch (InterruptedException e) {
             log.error("error ", e);
         }finally {
             NettyUtil.shutdown(clientGroup);
         }
+    }
+
+    public static void main(String[] args) {
+        new EchoClient().start();
     }
 }

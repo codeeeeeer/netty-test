@@ -6,6 +6,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import test.netty.constants.AddressConstants;
+import test.netty.netty.server.handler.EchoServerInitializer;
 import test.netty.utils.NettyUtil;
 
 /**
@@ -15,14 +16,14 @@ import test.netty.utils.NettyUtil;
  * @create 2020/01/17 15:44
  */
 @Slf4j
-public class TcpServer {
+public class EchoServer {
     public void start(){
         NioEventLoopGroup parentGroup = new NioEventLoopGroup(1);
         NioEventLoopGroup childGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap bootstrap = new ServerBootstrap()
                 .group(parentGroup, childGroup)
-                .childHandler(null)
+                .childHandler(new EchoServerInitializer())
                 .channel(NioServerSocketChannel.class);
             ChannelFuture channelFuture = bootstrap.bind(AddressConstants.PORT_TCP).sync();
             channelFuture.channel().closeFuture().sync();
@@ -32,5 +33,9 @@ public class TcpServer {
             NettyUtil.shutdown(childGroup);
             NettyUtil.shutdown(parentGroup);
         }
+    }
+
+    public static void main(String[] args) {
+        new EchoServer().start();
     }
 }
