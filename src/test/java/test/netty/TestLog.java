@@ -13,6 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 public class TestLog extends TestCase {
 
     public void testLog(){
-        log.info("test message !");
+        log.info("test message  {} - {}!", "hahahj", "124");
     }
 }
