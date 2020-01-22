@@ -25,7 +25,9 @@ public class EchoClient {
                 .channel(NioSocketChannel.class)
                 .handler(new EchoClientInitializer());
         try {
-            ChannelFuture channelFuture = bootstrap.connect(AddressConstants.ADDRESS_COMMON, AddressConstants.PORT_TCP).sync();
+            ChannelFuture channelFuture = bootstrap
+                    .connect(AddressConstants.ADDRESS_COMMON, AddressConstants.PORT_TCP)
+                    .sync();
             NettyUtil.sendInputMsgToChannel(channelFuture.channel());
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {

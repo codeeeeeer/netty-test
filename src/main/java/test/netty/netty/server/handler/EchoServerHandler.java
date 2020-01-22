@@ -15,7 +15,6 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         log.info("server receive : {}", msg);
-        System.out.println("server receive message");
         ctx.writeAndFlush(msg);
     }
 }
