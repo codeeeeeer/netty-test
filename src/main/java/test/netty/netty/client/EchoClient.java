@@ -19,7 +19,7 @@ import test.netty.utils.NettyUtil;
 public class EchoClient {
 
     public void start(){
-        NioEventLoopGroup clientGroup = new NioEventLoopGroup(1);
+        NioEventLoopGroup clientGroup = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap()
                 .group(clientGroup)
                 .channel(NioSocketChannel.class)
@@ -27,7 +27,7 @@ public class EchoClient {
         try {
             ChannelFuture channelFuture = bootstrap.connect(AddressConstants.ADDRESS_COMMON, AddressConstants.PORT_TCP).sync();
             NettyUtil.sendInputMsgToChannel(channelFuture.channel());
-            channelFuture.channel().close();
+            channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             log.error("error ", e);
         }finally {

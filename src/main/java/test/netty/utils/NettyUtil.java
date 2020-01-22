@@ -1,6 +1,8 @@
 package test.netty.utils;
 
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.extern.slf4j.Slf4j;
 import test.netty.constants.CommonConstants;
@@ -30,7 +32,7 @@ public class NettyUtil {
             if (CommonConstants.getExitStrs().contains(input)){
                 return;
             }
-            channel.writeAndFlush(input);
+            channel.writeAndFlush(Unpooled.copiedBuffer(input, CharsetUtil.UTF_8));
         }
     }
 }

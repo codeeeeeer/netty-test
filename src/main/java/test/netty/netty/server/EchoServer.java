@@ -2,6 +2,7 @@ package test.netty.netty.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +19,16 @@ import test.netty.utils.NettyUtil;
 @Slf4j
 public class EchoServer {
     public void start(){
-        NioEventLoopGroup parentGroup = new NioEventLoopGroup(1);
+        NioEventLoopGroup parentGroup = new NioEventLoopGroup();
         NioEventLoopGroup childGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap bootstrap = new ServerBootstrap()
-                .group(parentGroup, childGroup)
-                .childHandler(new EchoServerInitializer())
-                .channel(NioServerSocketChannel.class);
+                    .group(parentGroup, childGroup)
+                    .childHandler(new EchoServerInitializer())
+                    .childOption(ChannelOption.SO_KEEPALIVE, true)
+                    .channel(NioServerSocketChannel.class);
             ChannelFuture channelFuture = bootstrap.bind(AddressConstants.PORT_TCP).sync();
+            System.out.println("server ready !");
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
