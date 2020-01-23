@@ -23,11 +23,7 @@ public class PackingOutboundHandler extends ChannelOutboundHandlerAdapter {
         if (msg instanceof ByteBuf){
             ByteBuf byteBufMessage = (ByteBuf) msg;
 
-            int countBytes = byteBufMessage.readableBytes();
-            ByteBuf countBuff = ctx.alloc().directBuffer(4);
-            countBuff.writeInt(countBytes);
-
-            ByteBuf directBuffer = ctx.alloc().directBuffer(4 + byteBufMessage.readableBytes());
+            ByteBuf directBuffer = ctx.alloc().buffer(4 + byteBufMessage.readableBytes());
             directBuffer.writeInt(byteBufMessage.readableBytes());
             directBuffer.writeBytes(byteBufMessage);
             super.write(ctx, directBuffer, promise);
