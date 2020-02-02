@@ -17,7 +17,7 @@ import test.netty.utils.NettyUtil;
  * @create 2020/01/17 15:44
  */
 @Slf4j
-public class EchoServer {
+public class RpcServiceServer {
     public void start(){
         NioEventLoopGroup parentGroup = new NioEventLoopGroup();
         NioEventLoopGroup childGroup = new NioEventLoopGroup();
@@ -27,8 +27,8 @@ public class EchoServer {
                     .childHandler(new EchoServerInitializer())
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .channel(NioServerSocketChannel.class);
-            ChannelFuture channelFuture = bootstrap.bind(AddressConstants.PORT_TCP).sync();
-            log.info("server ready !");
+            ChannelFuture channelFuture = bootstrap.bind(AddressConstants.PORT_DUBBO).sync();
+            log.info("provider ready !");
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -39,6 +39,6 @@ public class EchoServer {
     }
 
     public static void main(String[] args) {
-        new EchoServer().start();
+        new RpcServiceServer().start();
     }
 }

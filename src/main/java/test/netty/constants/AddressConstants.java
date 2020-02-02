@@ -10,4 +10,7 @@ public class AddressConstants {
     public static final String ADDRESS_COMMON = "127.0.0.1";
 
     public static final Integer PORT_TCP = 10010;
+
+    public static final Integer PORT_DUBBO = 10010;
+
 }

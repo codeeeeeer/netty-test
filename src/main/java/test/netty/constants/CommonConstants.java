@@ -15,4 +15,9 @@ public class CommonConstants {
     public static Set<String> getExitStrs(){
         return exitStrs;
     }
+
+    public final static String SUFFIX_CLASS_JAVA = ".class";
+    public final static String URI_SPRATOR = ".class";
+
+
 }

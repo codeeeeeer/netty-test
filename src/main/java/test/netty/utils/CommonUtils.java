@@ -2,6 +2,7 @@ package test.netty.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,4 +29,20 @@ public class CommonUtils {
             log.error("error when sleeping! {}", e);
         }
     }
+
+    public static <T> void collectIfNotEmpty(Collection<T> targetContainer, Collection<? extends T> sourceContainer){
+        if ( isNotEmpty(sourceContainer)){
+            targetContainer.addAll(sourceContainer);
+        }
+    }
+
+    public static boolean isEmpty(Collection<?> test){
+        return test == null || test.isEmpty();
+    }
+
+    public static boolean isNotEmpty(Collection<?> test){
+        return ! isEmpty(test);
+    }
+
+
 }

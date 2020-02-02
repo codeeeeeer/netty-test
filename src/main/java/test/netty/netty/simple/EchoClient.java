@@ -1,4 +1,4 @@
-package test.netty.netty.netty;
+package test.netty.netty.simple;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
