@@ -3,6 +3,8 @@ package test.netty;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
+
 /**
  * 〈〉
  *
@@ -17,5 +19,11 @@ public class StringTest extends TestCase {
         log.info(strings.length + "");
         log.info(strings[0]);
 //        log.info(strings[1]);
+    }
+
+    public void testReplace(){
+        String basePackage = "test.netty.service";
+        String packagePath = basePackage.replace(".", File.separator);
+        log.info(packagePath);
     }
 }

@@ -17,7 +17,9 @@ public class CommonConstants {
     }
 
     public final static String SUFFIX_CLASS_JAVA = ".class";
-    public final static String URI_SPRATOR = ".class";
+    public final static String PROVIDER_NAME = "rpc:";
+    public final static String URI_SEPARATOR = "#";
+    public final static String METHOD_SEPARATOR = ".";
 
 
 }

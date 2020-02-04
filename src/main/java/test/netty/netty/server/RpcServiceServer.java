@@ -7,7 +7,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import test.netty.constants.AddressConstants;
-import test.netty.netty.server.handler.EchoServerInitializer;
+import test.netty.netty.server.handler.RpcServerInitializer;
+import test.netty.rpc.helper.RpcServerResourceHolder;
 import test.netty.utils.NettyUtil;
 
 /**
@@ -18,13 +19,15 @@ import test.netty.utils.NettyUtil;
  */
 @Slf4j
 public class RpcServiceServer {
-    public void start(){
+    public void start() throws Exception{
+        String basePackage = "test.netty.service";
+        RpcServerResourceHolder.initResource(basePackage);
         NioEventLoopGroup parentGroup = new NioEventLoopGroup();
         NioEventLoopGroup childGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap bootstrap = new ServerBootstrap()
                     .group(parentGroup, childGroup)
-                    .childHandler(new EchoServerInitializer())
+                    .childHandler(new RpcServerInitializer())
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .channel(NioServerSocketChannel.class);
             ChannelFuture channelFuture = bootstrap.bind(AddressConstants.PORT_DUBBO).sync();
@@ -38,7 +41,7 @@ public class RpcServiceServer {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         new RpcServiceServer().start();
     }
 }

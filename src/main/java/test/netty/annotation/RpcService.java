@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * @create 2020/1/29 11:28
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface RpcService {
     String relativePath() default "";
 }
